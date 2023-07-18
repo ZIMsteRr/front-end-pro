@@ -1,3 +1,5 @@
+"use strict";
+
 class Student {
   constructor(name, marks) {
     this.name = name;
@@ -10,7 +12,7 @@ class Student {
   }
 
   getMarksSum() {
-    return this.marks.reduce((total, mark) => total + mark, 0);
+    return this.marks.reduce((acc, mark) => acc + mark, 0);
   }
 }
 
