@@ -1,12 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="eng">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="index.js"></script>
-    <title>Document</title>
+    <title>Contacts table</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="index.js" defer></script>
 </head>
 <body>
-    
+<div class="container">
+    <form id="contactForm">
+        <input type="text" id="firstName" placeholder="first name">
+        <input type="text" id="lastName" placeholder="last name">
+        <input type="text" id="phoneNumber" placeholder="phone number">
+        <button type="button" id="addButton">Add</button>
+    </form>
+    <table id="contactTable">
+        <tr>
+            <th>Name</th>
+            <th>Last name</th>
+            <th>Phone number</th>
+            <th>Delete</th>
+        </tr>
+    </table>
+</div>
+
 </body>
 </html>
