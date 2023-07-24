@@ -6,14 +6,12 @@ function addContactToList(contact) {
     const listItem = document.createElement("li");
     listItem.classList.add("contactItem");
 
-    const htmlStr = `
+    listItem.innerHTML = `
         <span>${contact.firstName}</span>
         <span>${contact.lastName}</span>
         <span>${contact.phoneNumber}</span>
         <button class="deleteButton">Delete</button>
     `;
-
-    listItem.innerHTML = htmlStr;
     contactList.appendChild(listItem);
 }
 
