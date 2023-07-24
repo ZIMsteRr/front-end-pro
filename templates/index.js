@@ -1,12 +1,20 @@
 'use strict'
-function addContact(firstName, lastName, phoneNumber) {
-    const table = document.getElementById("contactTable");
-    const row = table.insertRow(-1);
-    row.insertCell(0).textContent = firstName;
-    row.insertCell(1).textContent = lastName;
-    row.insertCell(2).textContent = phoneNumber;
-    const deleteCell = row.insertCell(3);
-    deleteCell.innerHTML = '<button class="deleteButton">Delete</button>';
+
+const contactList = document.getElementById("contactList");
+
+function addContactToList(contact) {
+    const listItem = document.createElement("li");
+    listItem.classList.add("contactItem");
+
+    const htmlStr = `
+        <span>${contact.firstName}</span>
+        <span>${contact.lastName}</span>
+        <span>${contact.phoneNumber}</span>
+        <button class="deleteButton">Delete</button>
+    `;
+
+    listItem.innerHTML = htmlStr;
+    contactList.appendChild(listItem);
 }
 
 function clearInputFields() {
@@ -17,12 +25,12 @@ function clearInputFields() {
 
 function validateInputFields(firstName, lastName, phoneNumber) {
     if (firstName.trim() === "" || lastName.trim() === "") {
-        alert("Enter first and last name.");
+        alert("Enter your first ad last name.");
         return false;
     }
 
     if (phoneNumber.trim() === "" || isNaN(phoneNumber)) {
-        alert("Number must contain only digits.");
+        alert("Your phone number must contain only digits.");
         return false;
     }
 
@@ -37,17 +45,22 @@ function onAddButtonClick(event) {
     const phoneNumber = document.getElementById("phoneNumber").value;
 
     if (validateInputFields(firstName, lastName, phoneNumber)) {
-        addContact(firstName, lastName, phoneNumber);
+        const contact = {
+            firstName: firstName,
+            lastName: lastName,
+            phoneNumber: phoneNumber,
+        };
+        addContactToList(contact);
         clearInputFields();
     }
 }
 
 function onDeleteButtonClick(event) {
     if (event.target.classList.contains("deleteButton")) {
-        const row = event.target.parentNode.parentNode;
-        row.parentNode.removeChild(row);
+        const listItem = event.target.parentNode;
+        listItem.parentNode.removeChild(listItem);
     }
 }
 
 document.getElementById("addButton").addEventListener("click", onAddButtonClick);
-document.getElementById("contactTable").addEventListener("click", onDeleteButtonClick);
+contactList.addEventListener("click", onDeleteButtonClick);
