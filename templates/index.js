@@ -1,6 +1,12 @@
 'use strict'
 
 const contactList = document.getElementById("contactList");
+const firstNameInput = document.getElementById("firstName");
+const lastNameInput = document.getElementById("lastName");
+const phoneNumberInput = document.getElementById("phoneNumber");
+
+document.getElementById("addButton").addEventListener("click", onAddButtonClick);
+contactList.addEventListener("click", onDeleteButtonClick);
 
 function addContactToList(contact) {
     const listItem = document.createElement("li");
@@ -16,9 +22,9 @@ function addContactToList(contact) {
 }
 
 function clearInputFields() {
-    document.getElementById("firstName").value = "";
-    document.getElementById("lastName").value = "";
-    document.getElementById("phoneNumber").value = "";
+    firstNameInput.value = "";
+    lastNameInput.value = "";
+    phoneNumberInput.value = "";
 }
 
 function validateInputFields(firstName, lastName, phoneNumber) {
@@ -60,5 +66,3 @@ function onDeleteButtonClick(event) {
     }
 }
 
-document.getElementById("addButton").addEventListener("click", onAddButtonClick);
-contactList.addEventListener("click", onDeleteButtonClick);
