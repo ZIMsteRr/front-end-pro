@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
     <title>Todo List</title>
-    <script src="hw.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src = "new_todo_list.js" defer></script>
 </head>
-
 <body>
+<div class="container">
+    <form id="todoForm">
+        <label for="todoInput"></label><input type="text" id="todoInput" placeholder="Todo item">
+        <button type="button" id="addButton">Add</button>
+    </form>
     <ul id="todoList"></ul>
-    <input id="msgInput" type="text" placeholder="Введите сообщение" />
-    <button id="msgButton">Отправить</button>
-</body>
+</div>
 
+</body>
 </html>
