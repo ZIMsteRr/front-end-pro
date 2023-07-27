@@ -30,15 +30,14 @@ function onDeleteButtonClick(event) {
 }
 
 function addTodoItem(todoItem) {
-    const listItem = document.createElement("li");
-    listItem.classList.add("todoItem");
-
-    listItem.innerHTML = `
-        <span>${todoItem.message}</span>
-        <input type="checkbox">
-        <button class="deleteButton">Delete</button>
+    const listItemTemplate = `
+        <li class="todoItem">
+            <span>${todoItem.message}</span>
+            <input type="checkbox">
+            <button class="deleteButton">Delete</button>
+        </li>
     `;
-    TODO_LIST.appendChild(listItem);
+    TODO_LIST.insertAdjacentHTML("beforeend", listItemTemplate);
 }
 
 function clearInputField(inputElement) {
