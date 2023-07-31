@@ -1,0 +1,32 @@
+#tabs {
+    width: 400px;
+    margin: 0 auto;
+}
+
+#tabs nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f0f0f0;
+    padding: 10px;
+}
+
+#tabs nav button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #e0e0e0;
+    cursor: pointer;
+}
+
+#tabs nav button.active {
+    background-color: #ccc;
+}
+
+#tabs div div {
+    border: 1px solid #ddd;
+    padding: 10px;
+    display: none;
+}
+
+#tabs div div.active {
+    display: block;
+}
