@@ -41,7 +41,7 @@ function onBtnClick () {
             if (response.ok) {
                 return response.json()
             } else {
-                console.log('Can not do this)
+                console.log('Can not do this')
             }
         })
         .then((data) => {
