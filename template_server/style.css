@@ -1,0 +1,56 @@
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#contactForm {
+    margin-bottom: 20px;
+}
+
+#contactTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#contactTable th, #contactTable td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+#contactTable th {
+    background-color: #f2f2f2;
+}
+
+.contactItem {
+    background-color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.contactItem:hover {
+    background-color: #f2f2f2;
+}
+
+.deleteButton, #editButton {
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 5px;
+}
+
+.deleteButton:hover, #editButton:hover {
+    background-color: #ff0000;
+}
