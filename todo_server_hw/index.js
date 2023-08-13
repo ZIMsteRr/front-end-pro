@@ -1,63 +1,86 @@
-'use strict'
+import { Api } from '../api/Api.js'
+import { todoUrl } from '../api/url.js'
+import {
+    isEmpty,
+    getFormData,
+    clearFormData,
+    showError,
+} from '../lib_module/index';
 
 const FORM_SELECTOR = '#todoForm'
 const UL_SELECTOR = '#todoList'
 const DONE_CLASS = 'done'
 const DELETE_BTN_CLASS = 'deleteBtn'
 const TODO_ITEM_CLASS = 'todoItem'
-const URL = 'https://mock-api-5678.nw.r.appspot.com/todos/'
 
+const todoApi = new Api(todoUrl);
 const form = document.querySelector(FORM_SELECTOR)
 const ul = document.querySelector(UL_SELECTOR)
+let todoList = [];
 
 form.addEventListener('submit', onFormSubmit)
 ul.addEventListener('click', onUlClick)
 
-getTodoList()
-    .then((list) => {
-        renderTodoList(list)
-    })
-    .catch(e => showError(e.message))
+init()
+
+function init() {
+    todoApi.getList()
+        .then((list) => {
+            todoList = list
+            renderTodoList(list)
+        })
+        .catch(e => showError(e.message))
+}
 
 function onFormSubmit (e) {
     e.preventDefault()
 
-    const formElements = form.elements;
-    const todo = getFormData(formElements);
+    const formElements = form.elements
+    const todo = getFormData(formElements)
 
     if (!isTodoValid(todo)) {
-        showError('this field must not be empty')
+        showError('Поле сообщение не должно быть пустым')
         return
     }
 
-    createTodoAndRender(todo, formElements)
-        .catch(e => showError(e.message));
+    todoApi.create(todo)
+        .then((newTodo) => {
+            renderTodo(newTodo)
+            clearFormData(formElements)
+        })
+        .catch(e => showError(e.message))
 }
 
 function onUlClick (e) {
     const todoItemEl = getTodoItemEl(e.target)
-    const id = todoItemEl.dataset.id
+    const id = Number(todoItemEl.dataset.id)
+    const todo = todoList.find((todoItem) => todoItem.id === id)
 
     if (todoItemEl) {
         if (isDeleteBtn(e.target)) {
-            deleteTodo(id)
+            todoApi.delete(id)
                 .then(() => deleteTodoEl(todoItemEl))
                 .catch(e => showError(e.message))
         } else {
-            toggleDone(todoItemEl)
-            const done = todoItemEl.classList.contains(DONE_CLASS);
-            updateTodoStatus(id, done)
-                .catch(e => showError(e.message));
+            const newTodo = { ...todo, done: !todo.done }
+
+            todoApi.update(id, newTodo)
+                .then(() => {
+                    replaceTodoEl(todoItemEl, newTodo)
+                    todoList = todoList.map((todoItem) => todoItem.id === id ? newTodo : todoItem)
+                })
         }
     }
 }
 
-function isTodoValid (todo) { // boolean
-    return todo.message !== ''
+function isTodoValid (todo) {
+    return !isEmpty(todo.title)
 }
 
 function renderTodoList (list) {
-    ul.innerHTML = list.map(generateTodoHtml).join('')
+    const html = list.map(generateTodoHtml).join('')
+
+    ul.innerHTML = html
 }
 
 function renderTodo (todo) {
@@ -70,7 +93,10 @@ function generateTodoHtml (todo) {
     const done = todo.done ? ` ${DONE_CLASS}` : ''
 
     return `
-    <li class="todoItem${done}" data-id="${todo.id}">
+    <li 
+      class="todoItem${done}" 
+      data-id="${todo.id}"
+    >
       ${todo.title}
       <button class="${DELETE_BTN_CLASS}"><span>[Delete]</span></button>
     </li>
@@ -89,85 +115,8 @@ function deleteTodoEl (el) {
     return el.remove()
 }
 
-function toggleDone (el) {
-    return el.classList.toggle(DONE_CLASS)
+function replaceTodoEl (oldTodoEl, todo) {
+    const newTodoHtml = generateTodoHtml(todo)
+
+    oldTodoEl.outerHTML = newTodoHtml
 }
-
-function getTodoList () {
-    return fetch(URL)
-        .then((response) => {
-            if (response.ok) {
-                return response.json()
-            }
-
-            throw new Error(`${response.status} ${response.statusText}`);
-        })
-        .catch((error) => {
-            throw new Error(`Can not fitch todo list: ${error.message}`);
-        })
-}
-
-function createTodo (todo) {
-    return fetch(URL, {
-        method: 'POST',
-        body: JSON.stringify(todo), // JSON.parse
-        headers: {
-            'Content-type': 'application/json',
-        }
-    })
-        .then((response) => {
-            if (response.ok) {
-                return response.json()
-            }
-
-            throw new Error(`${response.status} ${response.statusText}`);
-        })
-        .catch((error) => {
-            throw new Error(`Can not create todo: ${error.message}`);
-        })
-}
-
-function deleteTodo (id) {
-    return fetch(`${URL}${id}`, {
-        method: 'DELETE',
-    })
-        .then((response) => {
-            if (response.ok) {
-                return response.json()
-            }
-
-            throw new Error(`${response.status} ${response.statusText}`);
-        })
-        .catch((error) => {
-            throw new Error(`Can not delete todo: ${error.message}`);
-        })
-}
-
-function updateTodoStatus(id, done) {
-    return fetch(`${URL}${id}`, {
-        method: 'PUT',
-        body: JSON.stringify({ done }), // Send only the 'done' status
-        headers: {
-            'Content-type': 'application/json',
-        }
-    })
-        .then((response) => {
-            if (response.ok) {
-                return response.json();
-            }
-            throw new Error(`${response.status} ${response.statusText}`);
-        })
-        .catch((error) => {
-            throw new Error(`Can not update todo status: ${error.message}`);
-        });
-}
-
-function createTodoAndRender(todo, formElements) { // Добавляем параметр formElements
-    return createTodo(todo)
-        .then((newTodo) => {
-            renderTodo(newTodo);
-            clearFormData(formElements);
-        })
-        .catch(e => showError(e.message));
-}
-
