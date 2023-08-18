@@ -1,11 +1,6 @@
-import { Api } from '../api/Api.js'
-import { todoUrl } from '../api/url.js'
-import {
-    isEmpty,
-    getFormData,
-    clearFormData,
-    showError,
-} from '../lib_module/index';
+import {Api} from '../api/Api.js'
+import {todoUrl} from '../api/url.js'
+import {clearFormData, getFormData, isEmpty, showError,} from '../lib_module/index';
 
 const FORM_SELECTOR = '#todoForm'
 const UL_SELECTOR = '#todoList'
@@ -78,9 +73,7 @@ function isTodoValid (todo) {
 }
 
 function renderTodoList (list) {
-    const html = list.map(generateTodoHtml).join('')
-
-    ul.innerHTML = html
+    ul.innerHTML = list.map(generateTodoHtml).join('')
 }
 
 function renderTodo (todo) {
@@ -116,7 +109,5 @@ function deleteTodoEl (el) {
 }
 
 function replaceTodoEl (oldTodoEl, todo) {
-    const newTodoHtml = generateTodoHtml(todo)
-
-    oldTodoEl.outerHTML = newTodoHtml
+    oldTodoEl.outerHTML = generateTodoHtml(todo)
 }
