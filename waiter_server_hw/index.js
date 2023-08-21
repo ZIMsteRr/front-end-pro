@@ -1,6 +1,4 @@
-'use strict';
-
-import { waitersUrl } from "../api/url.js";
+import { waitersUrl } from '../api/url.js';
 
 const EDIT_BTN_CLASS = 'editBtn';
 const DELETE_BTN_CLASS = 'deleteBtn';
@@ -21,39 +19,24 @@ waitersList.addEventListener('click', onWaitersListClick);
 init();
 
 function init() {
-    fetchWaiters(renderWaitersOnError);
+    fetchWaiters(renderWaiters, renderWaitersOnError);
 }
 
 function fetchWaiters(successCallback, errorCallback) {
     fetch(waitersUrl)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Сетевой ответ не был успешным');
+                throw new Error('Network response was not successful');
             }
             return response.json();
         })
         .then(successCallback)
         .catch(error => {
-            console.error('Ошибка при получении данных официантов:', error);
+            console.error('Error fetching waiter data:', error);
             if (errorCallback) {
                 errorCallback();
             }
         });
-}
-
-function getWaiterById(id) {
-    const waiter = Array.from(waitersList.querySelectorAll(`.${WAITER_ITEM_CLASS}`))
-        .find(waiter => waiter.dataset.id === id);
-
-    if (waiter) {
-        const waiterId = waiter.querySelector('td').textContent;
-        const waiterName = waiter.querySelector('td:nth-child(2)').textContent;
-        const waiterPhone = waiter.querySelector('td:nth-child(3)').textContent;
-
-        return { id: waiterId, firstName: waiterName, phone: waiterPhone };
-    }
-
-    return null;
 }
 
 function renderWaiters(waiters) {
@@ -81,7 +64,7 @@ function generateWaiterHtml(waiter) {
 function onFormSubmit(event) {
     event.preventDefault();
 
-    const editId = waiterForm.getAttribute('data-edit-id'); // Получение id официанта, если форма была в режиме редактирования
+    const editId = waiterForm.getAttribute('data-edit-id');
 
     const firstName = nameInput.value.trim();
     const phone = phoneInput.value.trim();
@@ -101,7 +84,7 @@ function onFormSubmit(event) {
 
 function updateWaiter(id, waiter, successCallback, errorCallback) {
     fetch(`${waitersUrl}/${id}`, {
-        method: 'PUT', // Используйте PUT запрос для обновления
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -109,7 +92,7 @@ function updateWaiter(id, waiter, successCallback, errorCallback) {
     })
         .then(successCallback)
         .catch(error => {
-            console.error('Ошибка при обновлении официанта:', error);
+            console.error('Error updating waiter:', error);
             if (errorCallback) {
                 errorCallback();
             }
@@ -155,14 +138,14 @@ function editWaiter(id) {
 }
 
 function deleteWaiter(id) {
-    const confirmed = confirm('Вы уверены, что хотите удалить этого официанта?');
+    const confirmed = confirm('Are you sure you want to delete this waiter?');
     if (confirmed) {
         fetch(`${waitersUrl}/${id}`, {
             method: 'DELETE',
         })
             .then(() => fetchWaiters(renderWaiters, renderWaitersOnError))
             .catch(error => {
-                console.error('Ошибка при удалении официанта:', error);
+                console.error('Error deleting waiter:', error);
             });
     }
 }
