@@ -1,5 +1,3 @@
-'use strict';
-
 import { waitersUrl } from "../api/url.js";
 
 const EDIT_BTN_CLASS = 'editBtn';
@@ -81,7 +79,7 @@ function generateWaiterHtml(waiter) {
 function onFormSubmit(event) {
     event.preventDefault();
 
-    const editId = waiterForm.getAttribute('data-edit-id'); // Получение id официанта, если форма была в режиме редактирования
+    const editId = waiterForm.getAttribute('data-edit-id');
 
     const firstName = nameInput.value.trim();
     const phone = phoneInput.value.trim();
@@ -101,7 +99,7 @@ function onFormSubmit(event) {
 
 function updateWaiter(id, waiter, successCallback, errorCallback) {
     fetch(`${waitersUrl}/${id}`, {
-        method: 'PUT', // Используйте PUT запрос для обновления
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },

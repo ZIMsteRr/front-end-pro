@@ -1,10 +1,10 @@
 import { Api } from '../api/Api.js'
 import { contactsUrl } from '../api/url.js'
 import {
-    fillForm,
+    //fillForm,
     fillFormInputs,
     clearFormData,
-    getFormData,
+    //getFormData,
     getFormDataInputs,
 } from '../lib_module'
 
@@ -35,11 +35,12 @@ function onContactContainerClick (e) {
     const contactEl = findContactEl(target)
     const id = Number(contactEl?.dataset?.id)
 
-    if (id && isEditButtonClicked(target)) {
-        const contact = getContactById(id)
+    if (id) {
+        if(isEditButtonClicked(target)) {
+            const contact = getContactById(id)
 
-        // fillForm(form.elements, contact)
-        fillFormInputs(inputs, contact)
+            fillFormInputs(inputs, contact)
+        }
     }
 }
 
@@ -110,4 +111,15 @@ function getContactById (id) {
 
 function replaceContactInList (id, contact) {
     contactList = contactList.map(c => c.id === Number(id) ? { ...contact, id: Number(id) } : c)
+}
+
+function deleteContactById (id) {
+    const contactEl = findContactElById(id)
+
+    if (contactEl) {
+        contactEl.remove()
+        else
+    }
+
+    throw new Error('Contact element not found')
 }
