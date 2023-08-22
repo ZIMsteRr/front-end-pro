@@ -27,15 +27,15 @@ export class Api {
             })
     }
 
-    create (todo) {
-        return this.request('', 'POST', todo)
+    create () {
+        return this.request('', 'POST')
             .catch((error) => {
                 throw new Error(`Can not create: ${error.message}`);
             })
     }
 
-    update (id, todo) {
-        return this.request(id, 'PUT', todo)
+    update (id) {
+        return this.request(id, 'PUT')
             .catch((error) => {
                 throw new Error(`Can not update: ${error.message}`);
             })
