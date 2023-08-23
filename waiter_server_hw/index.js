@@ -9,12 +9,15 @@ function getElement(id) {
 }
 
 const waiterForm = getElement('waiterForm');
+const addButton = waiterForm.querySelector('button[type="submit"]');
+const saveButton = getElement('saveButton');
 const nameInput = getElement('nameInput');
 const phoneInput = getElement('phoneInput');
 const waitersList = getElement('waitersList');
 
 waiterForm.addEventListener('submit', onFormSubmit);
 waitersList.addEventListener('click', onWaitersListClick);
+saveButton.addEventListener('click', onSaveButtonClick);
 
 init();
 
@@ -82,6 +85,7 @@ function onFormSubmit(event) {
     }
 }
 
+
 function updateWaiter(id, waiter, successCallback, errorCallback) {
     fetch(`${waitersUrl}/${id}`, {
         method: 'PUT',
@@ -128,13 +132,57 @@ function onWaitersListClick(event) {
     }
 }
 
+function getWaiterById(id) {
+    const waiter = Array.from(waitersList.querySelectorAll(`.${WAITER_ITEM_CLASS}`))
+        .find(waiter => waiter.dataset.id === id);
+
+    if (waiter) {
+        const waiterId = waiter.querySelector('td').textContent;
+        const waiterName = waiter.querySelector('td:nth-child(2)').textContent;
+        const waiterPhone = waiter.querySelector('td:nth-child(3)').textContent;
+
+        return { id: waiterId, firstName: waiterName, phone: waiterPhone };
+    }
+
+    return null;
+}
+
 function editWaiter(id) {
     const waiter = getWaiterById(id);
     if (waiter) {
         nameInput.value = waiter.firstName;
         phoneInput.value = waiter.phone;
         waiterForm.setAttribute('data-edit-id', id);
+        addButton.style.display = 'none'; // Скрыть кнопку "Добавить"
+        saveButton.style.display = 'inline-block'; // Показать кнопку "Сохранить"
     }
+}
+
+function onSaveButtonClick() {
+    const editId = waiterForm.getAttribute('data-edit-id');
+    const firstName = nameInput.value.trim();
+    const phone = phoneInput.value.trim();
+
+    if (!firstName || !phone) {
+        return;
+    }
+
+    const waiter = { firstName, phone };
+
+    if (editId) {
+        updateWaiter(editId, waiter, onSaveSuccess, renderWaitersOnError);
+        return; // Добавьте этот return, чтобы предотвратить дополнительное выполнение кода
+    }
+
+    clearFormAndFetchWaiters();
+    addButton.style.display = 'inline-block';
+    saveButton.style.display = 'none';
+}
+
+function onSaveSuccess() {
+    waiterForm.removeAttribute('data-edit-id');
+    clearForm();
+    fetchWaiters(renderWaiters, renderWaitersOnError);
 }
 
 function deleteWaiter(id) {
