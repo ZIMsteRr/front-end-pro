@@ -1,3 +1,3 @@
-import { Controller } from './controller/Controller.js';
+import {Controller} from './controller/controller';
 
 new Controller(document.querySelector('#root'))

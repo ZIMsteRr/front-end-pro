@@ -34,15 +34,15 @@ export class Api {
             })
     }
 
-    update (id) {
-        return this.request(id, 'PUT')
+    update (id, waiter) {
+        return this.request(id, 'PUT', waiter)
             .catch((error) => {
                 throw new Error(`Can not update: ${error.message}`);
             })
     }
 
-    delete (id) {
-        return this.request(id, 'DELETE')
+    delete(id) {
+        return this.request(`/${id}`, 'DELETE')
             .catch((error) => {
                 throw new Error(`Can not delete: ${error.message}`);
             })
