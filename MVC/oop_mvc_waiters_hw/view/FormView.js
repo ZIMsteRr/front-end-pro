@@ -4,7 +4,7 @@ import {
     clearFormData,
     isEmpty,
     showError,
-} from '../../../lib_module'
+} from '../../../lib_module/index.js'
 
 export class FormView {
     constructor (options) {

@@ -1,6 +1,6 @@
 import { WaiterCollection } from '../model/WaiterCollection.js';
-import { FormView } from '../view/formView.js';
-import { ListView } from '../view/listView.js';
+import { FormView } from '../view/FormView.js';
+import { ListView } from '../view/ListView.js';
 
 export class WaiterController {
     constructor(rootEl) {
