@@ -27,8 +27,8 @@ export class Api {
             })
     }
 
-    create () {
-        return this.request('', 'POST')
+    create (waiter) {
+        return this.request('', 'POST', waiter)
             .catch((error) => {
                 throw new Error(`Can not create: ${error.message}`);
             })
