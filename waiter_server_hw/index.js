@@ -153,8 +153,8 @@ function editWaiter(id) {
         nameInput.value = waiter.firstName;
         phoneInput.value = waiter.phone;
         waiterForm.setAttribute('data-edit-id', id);
-        addButton.style.display = 'none'; // Скрыть кнопку "Добавить"
-        saveButton.style.display = 'inline-block'; // Показать кнопку "Сохранить"
+        addButton.style.display = 'none';
+        saveButton.style.display = 'inline-block';
     }
 }
 
@@ -171,7 +171,7 @@ function onSaveButtonClick() {
 
     if (editId) {
         updateWaiter(editId, waiter, onSaveSuccess, renderWaitersOnError);
-        return; // Добавьте этот return, чтобы предотвратить дополнительное выполнение кода
+        return;
     }
 
     clearFormAndFetchWaiters();
