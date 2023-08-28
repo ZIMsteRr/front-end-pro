@@ -27,15 +27,15 @@ export class Api {
             })
     }
 
-    create (waiter) {
-        return this.request('', 'POST', waiter)
+    create (data) {
+        return this.request('', 'POST', data)
             .catch((error) => {
                 throw new Error(`Can not create: ${error.message}`);
             })
     }
 
-    update (id, waiter) {
-        return this.request(id, 'PUT', waiter)
+    update (id, data) {
+        return this.request(id, 'PUT', data)
             .catch((error) => {
                 throw new Error(`Can not update: ${error.message}`);
             })
