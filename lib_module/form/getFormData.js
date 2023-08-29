@@ -3,8 +3,7 @@ export function getFormData (formElements) {
 
     for (const input of formElements) {
         if (input.type === 'text' || input.type === 'hidden') {
-
-            data[input.id] = input.id === 'id' ? Number(input.value) : input.value;
+            data[input.id] =  input.value;
         }
     }
 

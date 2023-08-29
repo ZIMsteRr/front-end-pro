@@ -1,6 +1,6 @@
 import { WaiterCollection } from '../model/WaiterCollection.js';
-import { FormView } from '../view/formView.js';
-import { ListView } from '../view/listView.js';
+import { FormView } from '../view/FormView.js';
+import { ListView } from '../view/ListView.js';
 
 export class WaiterController {
     constructor(rootEl) {
@@ -8,7 +8,7 @@ export class WaiterController {
         this.waiterCollection = new WaiterCollection();
         this.formView = new FormView({
             //onEdit: (id, waiter) => this.editWaiter(id, waiter),
-            onSave: (id, waiter) => this.saveWaiter(id, waiter),
+            onSave: (waiter) => this.saveWaiter(waiter),
         });
         this.listView = new ListView({
             onEdit: id => this.editWaiter(id),
@@ -23,7 +23,7 @@ export class WaiterController {
         });
     }
 
-    saveWaiter(id, waiter) {
+    saveWaiter(waiter) {
         if (waiter.id) {
             this.waiterCollection.update(waiter)
                 .then(updatedWaiter => {

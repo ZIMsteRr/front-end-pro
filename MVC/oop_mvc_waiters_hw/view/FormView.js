@@ -4,7 +4,7 @@ import {
     clearFormData,
     isEmpty,
     showError,
-} from '../../../lib_module'
+} from '../../../lib_module/index.js'
 
 export class FormView {
     constructor (options) {
@@ -45,17 +45,7 @@ export class FormView {
             showError('Invalid form data');
             return;
         }
-
-        const editId = waiter.id;
-        if (editId) {
-            console.log('Editing waiter with ID:', editId);
-            this.options.onSave(waiter.id, waiter);
-        } else {
-            console.log('Creating new waiter:', waiter);
             this.options.onSave(waiter);
-        }
-
-        this.clearForm();
     }
 
         isWaiterValid(waiter)
