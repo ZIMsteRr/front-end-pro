@@ -3,7 +3,7 @@ const concat = require('gulp-concat');
 const clean = require('gulp-clean');
 const uglify = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
-const {start} = require("./gulpfile");
+const { start } = require("./gulpfile");
 const browserSync = require('browser-sync').create()
 
 function startTask(done) {
