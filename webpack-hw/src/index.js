@@ -1,5 +1,7 @@
 import { waitersUrl } from '../../api/url.js';
 
+import './style.css'
+
 const EDIT_BTN_CLASS = 'editBtn';
 const DELETE_BTN_CLASS = 'deleteBtn';
 const WAITER_ITEM_CLASS = 'waiterItem';
