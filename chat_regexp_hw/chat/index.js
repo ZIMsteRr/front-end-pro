@@ -7,5 +7,7 @@ const form = document.querySelector('#message-form');
 const chatContainer = document.querySelector('.chatContainer');
 
 const view = new View(chatContainer);
-const chat = new Chat(ws, view);
+const chat = new Chat(ws, (chatMessage) => {
+    view.displayMessage(chatMessage);
+});
 const chatForm = new Form(form, ws);

@@ -1,7 +1,7 @@
 export class Chat {
-    constructor(ws, view) {
+    constructor(ws, messageCallback) {
         this.ws = ws;
-        this.view = view;
+        this.messageCallback = messageCallback;
 
         this.setupWebSocket();
     }
@@ -22,7 +22,7 @@ export class Chat {
         this.ws.onmessage = (event) => {
             console.log('onmessage', event);
             const chatMessage = JSON.parse(event.data);
-            this.view.displayMessage(chatMessage);
+            this.messageCallback(chatMessage);
         };
 
         this.ws.onerror = (event) => {
