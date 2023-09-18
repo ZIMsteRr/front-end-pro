@@ -17,7 +17,7 @@ export class WaiterController {
         this.formView.appendTo(this.rootEl);
         this.listView.appendTo(this.rootEl);
 
-        this.initializeWaiters();
+        this.initializeWaiters().then(r => console.log(r));
     }
 
     async initializeWaiters() {
