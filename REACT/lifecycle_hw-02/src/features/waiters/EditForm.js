@@ -1,29 +1,30 @@
 import React from "react";
 
-export function EditForm (onWaiterSubmit) {
-    const [waiter, setWaiter] = React.useState('');
+export function EditForm ({ onWaiterSubmit }) {
+    const [firstName, setFirstName] = React.useState('');
+    const [phone, setPhone] = React.useState('');
 
     const onSubmit = (event) => {
         event.preventDefault();
 
         onWaiterSubmit({
-            firstName: waiter.firstName,
-            phone: waiter.phone
+            id: Date.now(),
+            firstName: firstName,
+            phone: phone,
         })
 
-        setWaiter('')
-    }
-
-    const onWaiterChange = (event) => {
-        setWaiter(event.target.value)
+        setFirstName('')
+        setPhone('')
     }
 
     return (
         <form onSubmit={onSubmit}>
             <label htmlFor="firstName">Name</label>
-            <input value={waiter} onChange={onWaiterChange} type="text" id="firstName" />
+            <input value={firstName} onChange={event => setFirstName(event.target.value)} type="text" id="firstName" />
+
             <label htmlFor="phone">Phone</label>
-            <input type="text" id="phone" />
+            <input value={phone} onChange={event => setPhone(event.target.value)} type="text" id="phone" />
+
             <button type="submit">Save</button>
         </form>
     )
