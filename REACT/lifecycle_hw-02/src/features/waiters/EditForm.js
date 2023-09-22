@@ -8,7 +8,7 @@ export function EditForm ({ onWaiterSubmit }) {
         event.preventDefault();
 
         onWaiterSubmit({
-            id: Date.now(),
+            id: Date.now().toLocaleString(),
             firstName: firstName,
             phone: phone,
         })
