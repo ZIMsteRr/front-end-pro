@@ -1,32 +1,41 @@
 import React from "react";
 import style from './EditForm.module.css'
 import {useSelector} from "react-redux";
-import {useDispatch} from "react-redux";
-import {actionSaveItem} from "./store/actions";
+import {WaitersApi} from "./api/server";
+import {actionCreateItem, actionUpdateItem} from "./store/actions";
 
-export function EditForm () {
-    const dispatch = useDispatch();
-    const editingWaiter = useSelector((state) => state.waiters.editingWaiter);
-    const [firstName, setFirstName] = React.useState(editingWaiter.firstName);
-    const [phone, setPhone] = React.useState(editingWaiter.phone);
+export function EditForm ({ onWaitersSubmit }) {
+    const waiter = useSelector((state) => state.waiters.waiter);
+    const [firstName, setFirstName] = React.useState('');
+    const [phone, setPhone] = React.useState('');
 
     React.useEffect(() => {
-        if (editingWaiter.id) {
-            setFirstName(editingWaiter.firstName)
-            setPhone(editingWaiter.phone)
+        if (waiter) {
+            setFirstName(waiter.firstName)
+            setPhone(waiter.phone)
         }
-    }, [editingWaiter])
+    }, [waiter])
 
     const onSubmit = (event) => {
         event.preventDefault();
 
-        const formWaiter = {
-            ...editingWaiter,
+        c
+        const onWaitersSubmit = (formWaiter) => {
+            if (formWaiter.id) {
+                WaitersApi.update(formWaiter.id, formWaiter).then((newWaiter) => {
+                    dispatch(actionUpdateItem(newWaiter));
+                });
+            } else {
+                WaitersApi.create(formWaiter).then((newWaiter) => dispatch(actionCreateItem(newWaiter)));
+            }
+        };
+
+        onWaitersSubmit({
+            ...waiter,
             firstName: firstName,
             phone: phone,
-        }
+        })
 
-        dispatch(actionSaveItem(formWaiter));
         setFirstName('')
         setPhone('')
     }
