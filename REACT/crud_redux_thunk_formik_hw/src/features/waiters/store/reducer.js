@@ -42,8 +42,8 @@ export function reducer (state = initialState, {type, payload}) {
             }
         case ACTION_WAITER_UPDATE_ITEM:
             return {
-                editingWaiter: DEFAULT_WAITER,
                 ...state,
+                editingWaiter: DEFAULT_WAITER,
                 list: state.list.map((waiter) => waiter.id === payload.id ? payload : waiter)
             }
         default:
