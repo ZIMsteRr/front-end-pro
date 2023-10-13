@@ -3,14 +3,17 @@ import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import { UserList } from "./UserList";
 import { AlbumList } from "./AlbumList";
 import { PhotoList } from "./PhotoList";
+import {Button} from "antd";
 
 export function App() {
     return (
         <BrowserRouter>
             <nav>
-                <ul>
+                <ul style={{ listStyle: 'none', padding: 0 }}>
                     <li>
-                        <Link to="/">Список пользователей</Link>
+                        <Link to={`/`}>
+                            <Button type="primary">Вернуться на главную</Button>
+                        </Link>
                     </li>
                 </ul>
             </nav>
