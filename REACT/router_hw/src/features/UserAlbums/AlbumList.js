@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAlbums } from "./store/actions";
+import { Button, Table } from "antd";
 
 export function AlbumList() {
     const { userId } = useParams();
@@ -12,18 +13,30 @@ export function AlbumList() {
         dispatch(fetchAlbums(userId));
     }, [dispatch, userId]);
 
+    const columns = [
+        {
+            title: "Альбом",
+            dataIndex: "title",
+            key: "title",
+        },
+        {
+            title: "Фото",
+            key: "photo",
+            render: (text, album) => (
+                <Link to={`/photos/${album.id}`}>
+                    <Button type="primary">Фото</Button>
+                </Link>
+            ),
+        },
+    ];
+
     return (
         <div>
             <h1>Альбомы пользователя</h1>
-            <Link to="/">Назад</Link>
-            <ul>
-                {albums.map((album) => (
-                    <li key={album.id}>
-                        {album.title}
-                        <Link to={`/photos/${album.id}`}>Фото</Link>
-                    </li>
-                ))}
-            </ul>
+            <Link to="/">
+                <Button type="default">Назад к пользователям</Button>
+            </Link>
+            <Table dataSource={albums} columns={columns} />
         </div>
     );
 }

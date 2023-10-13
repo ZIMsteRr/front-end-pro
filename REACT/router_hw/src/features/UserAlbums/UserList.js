@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "./store/actions";
+import { Button, Table } from "antd";
 
 export function UserList() {
     const dispatch = useDispatch();
@@ -11,17 +12,27 @@ export function UserList() {
         dispatch(fetchUsers());
     }, [dispatch]);
 
+    const columns = [
+        {
+            title: "Имя",
+            dataIndex: "name",
+            key: "name",
+        },
+        {
+            title: "Альбомы",
+            key: "albums",
+            render: (text, user) => (
+                <Link to={`/albums/${user.id}`}>
+                    <Button type="default">Альбомы</Button>
+                </Link>
+            ),
+        },
+    ];
+
     return (
         <div>
             <h1>Список пользователей</h1>
-            <ul>
-                {users.map((user) => (
-                    <li key={user.id}>
-                        {user.name}
-                        <Link to={`/albums/${user.id}`}>Альбомы</Link>
-                    </li>
-                ))}
-            </ul>
+            <Table dataSource={users} columns={columns} />
         </div>
     );
 }
