@@ -49,7 +49,7 @@ function renderWaiters(waiters) {
 }
 
 function renderWaitersOnError() {
-    waitersList.innerHTML = '<tr><td colspan="3">Error fetching waiters</td></tr>';
+    waitersList.innerHTML = '<tr><td colspan="3">Error fetching Waiters</td></tr>';
 }
 
 function generateWaiterHtml(waiter) {

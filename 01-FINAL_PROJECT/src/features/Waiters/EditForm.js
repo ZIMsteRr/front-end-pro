@@ -59,7 +59,6 @@ export function EditForm () {
                         <Field type="text" name="phone" />
                         <ValidationError name="phone" />
                     </div>
-
                     <SaveButton />
                 </Form>
             </Formik>

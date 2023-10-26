@@ -35,7 +35,7 @@ export function EditForm () {
 
         dispatch(actionSaveItem(formWaiter));
         resetForm();
-        navigate('/waiters');
+        navigate('/Waiters');
     }
 
     return (

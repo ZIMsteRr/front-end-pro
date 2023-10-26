@@ -26,7 +26,7 @@ export class WaiterController {
             this.listView.renderWaiters(list);
 
         } catch (error) {
-            console.error('Error fetching waiters:', error);
+            console.error('Error fetching Waiters:', error);
         }
     }
 

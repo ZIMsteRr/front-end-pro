@@ -15,7 +15,7 @@ export class WaiterCollection {
             return list;
 
         } catch (error) {
-            console.error('Error fetching waiters:', error);
+            console.error('Error fetching Waiters:', error);
             throw error;
         }
     }
